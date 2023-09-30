@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+
+<sdf version="1.5">
+	<world name="default">
+		<!-- A global light source -->
+		<include>
+			<uri>model://sun</uri>
+		</include>
+
+		<!-- A ground plane -->
+		<include>
+			<uri>model://ground_plane</uri>
+		</include>
+		
+		
+		<include>
+            <uri>model://line_fallower_track</uri>
+            <static>true</static>
+            <pose>1.465272 -1.021163 0.47 0 0 0</pose> <!-- Adjust the pose as needed -->
+        </include>
+		
+		
+	</world>
+</sdf>

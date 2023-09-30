@@ -1,0 +1,25 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/emre/catkin_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/emre/catkin_ws/src/command_turtle/include/**",
+        "/home/emre/catkin_ws/src/turtlebot3_simulations/turtlebot3_fake/include/**",
+        "/home/emre/catkin_ws/src/turtlebot3_simulations/turtlebot3_gazebo/include/**",
+        "/home/emre/catkin_ws/src/turtlebot3/turtlebot3_slam/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
