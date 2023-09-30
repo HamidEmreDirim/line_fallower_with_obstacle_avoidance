@@ -1,34 +1,85 @@
-CARLA Simulator
+Line fallower & Obstacle Avoider robot
 ===============
 
-[![Build Status](https://travis-ci.org/carla-simulator/carla.svg?branch=master)](https://travis-ci.org/carla-simulator/carla)
-[![Documentation](https://readthedocs.org/projects/carla/badge/?version=latest)](http://carla.readthedocs.io)
+# OBSTACLE AVOIDING HAS NOT BEEN ADDED YET!!
 
-[![carla.org](Docs/img/btn/web.png)](http://carla.org)
-[![download](Docs/img/btn/download.png)](https://github.com/carla-simulator/carla/blob/master/Docs/download.md)
-[![documentation](Docs/img/btn/docs.png)](http://carla.readthedocs.io)
-[![forum](Docs/img/btn/forum.png)](https://github.com/carla-simulator/carla/discussions)
-[![discord](Docs/img/btn/chat.png)](https://discord.gg/8kqACuC)
 
-CARLA is an open-source simulator for autonomous driving research. CARLA has been developed from the ground up to support development, training, and
-validation of autonomous driving systems. In addition to open-source code and protocols, CARLA provides open digital assets (urban layouts, buildings,
-vehicles) that were created for this purpose and can be used freely. The simulation platform supports flexible specification of sensor suites and
-environmental conditions.
+[![carla.org](Docs/img/btn/web.png)]()
+[![download](Docs/img/btn/download.png)](https://github.com/HamidEmreDirim/line_fallower_with_obstacle_avoidance)
 
-[![CARLA Video](Docs/img/video_thumbnail_0910.jpg)](https://www.youtube.com/watch?v=7jej46ALVRE)
 
-If you want to benchmark your model in the same conditions as in our CoRL’17
-paper, check out
-[Benchmarking](https://github.com/carla-simulator/driving-benchmarks).
+Gazebo simulation that simulates line fallower and obstacle avoider robots.
 
-* [**Get CARLA overnight build**](http://carla-releases.s3.amazonaws.com/Linux/Dev/CARLA_Latest.tar.gz)
 
-### Recommended system
 
-* Intel i7 gen 9th - 11th / Intel i9 gen 9th - 11th / AMD ryzen 7 / AMD ryzen 9
-* +16 GB RAM memory 
-* NVIDIA RTX 2070 / NVIDIA RTX 2080 / NVIDIA RTX 3070, NVIDIA RTX 3080
-* Ubuntu 18.04
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## CARLA Ecosystem
 Repositories associated to the CARLA simulation platform:
