@@ -5,6 +5,8 @@ import numpy as np
 from sensor_msgs.msg import Image, LaserScan
 from cv_bridge import CvBridge, CvBridgeError
 from geometry_msgs.msg import Twist, Vector3
+from math import radians
+
 
 
 # Initialize ROS node
@@ -19,83 +21,71 @@ rate = rospy.Rate(5)
 # Create a CvBridge object to convert ROS messages to OpenCV format
 bridge = CvBridge()
 
+move_cmd = Twist()
+move_cmd.linear.x = 0.2
+	# by default angular.z is 0 so setting this isn't required
+
+        #let's turn at 45 deg/s
+turn_left_cmd = Twist()
+turn_left_cmd.linear.x = 0
+turn_left_cmd.angular.z = radians(45)
+
+
+turn_right_cmd = Twist()
+turn_right_cmd.linear.x = 0
+turn_right_cmd.angular.z = -radians(45)
+
+
 
 
 obstacle_detected = False
 line_detected = False
-
+case = ""
 
 
 # Checking obstacles
 def checkcase(range):
     global obstacle_detected
     global line_detected
-    msg = Twist()
-    linearx = 0
-    angularz = 0
-    case = ""
-    if ( range["right"] >1  and range["center"] > 1 and range["left"] >1):
-        case = 'NO OBSTACLE!'
-        if obstacle_detected:
-            angularz=-0.5
-            angularx=0.2
-            msg.linear.x = linearx
-            msg.angular.z = angularz
-            pub.publish(msg)
+    global case
+   
+    left_value = 0.5
+    right_value = 0.5
+    center_value = 0.5
 
-        obstacle_detected = False
-        
-    elif ( range["right"] > 1  and range["center"] < 1 and range["left"] > 1 ):
+    if ( range["right"] >0.4  and range["center"] > 0.4 and range["left"] >0.4):
+        case = 'NO OBSTACLE!'
+   
+    elif ( range["right"] > center_value  and range["center"] < center_value and range["left"] > 0.3 ):
         case = 'OBSTACLE CENTER!'
         obstacle_detected = True
-        linearx=0
-        angularz=0.5
-    elif ( range["right"] < 1  and range["center"] > 1 and range["left"] > 1 ):
-        case = 'OBSTACLE RIGHT!'
-        
-        linearx=0
-        angularz=0.5
-    elif ( range["right"] > 1  and range["center"] > 1 and range["left"] < 1 ):
-        case = 'OBSTACLE LEFT!'
-        
-        linearx=0.5
-        angularz=0
-    elif ( range["right"] < 1  and range["center"] > 1 and range["left"] < 1 ):
-        case = 'OBSTACLE RIGHT AND LEFT!'
-        
-        linearx=0.6
-        angularz=0
-    elif ( range["right"] > 1  and range["center"] < 1 and range["left"] < 1 ):
-        case = 'OBSTACLE CENTER AND LEFT!'
-        
-        linearx=0
-        angularz=0.3
-    elif ( range["right"] < 1  and range["center"] < 1 and range["left"] > 1 ):
-        case = 'OBSTACLE CENTER AND RIGHT!'
-        obstacle_detected = True
-        linearx=0
-        angularz=0.3
-    elif ( range["right"] < 1  and range["center"] < 1 and range["left"] < 1 ):
-        case = 'OBSTACLE AHEAD!'
-        obstacle_detected = True
     
-        linearx=0
-        angularz=0.8
+    elif ( range["right"] < right_value  and range["center"] > right_value and range["left"] > right_value ):
+        case = 'OBSTACLE RIGHT!'
+   
+    elif ( range["right"] > left_value  and range["center"] > left_value and range["left"] < left_value ):
+        case = 'OBSTACLE LEFT!'
+    
+    elif ( range["right"] < 0.3  and range["center"] > 0.3 and range["left"] < 0.3 ):
+        case = 'OBSTACLE RIGHT AND LEFT!'
+ 
+    elif ( range["right"] > center_value  and range["center"] < center_value and range["left"] < center_value ):
+        case = 'OBSTACLE CENTER!'
+        obstacle_detected = True
 
-    print(case)
-    if obstacle_detected:
-        msg.linear.x = linearx
-        msg.angular.z = angularz
-        pub.publish(msg)  
+    elif ( range["right"] < center_value  and range["center"] < center_value and range["left"] > center_value):
+        case = 'OBSTACLE CENTER!'
+        obstacle_detected = True
 
+    elif ( range["right"] < center_value  and range["center"] < center_value and range["left"] < center_value ):
+        case = 'OBSTACLE CENTER!'
 
-
-
+    print(case)  
 
 
 
 def laser_callback(message):
-    rospy.loginfo(len(message.ranges))
+    
     range={
         "right" : min(min(message.ranges[300:350]) , 2),
         "center" : min(min(message.ranges[0:60]), 2),
@@ -158,16 +148,45 @@ def follow_line(image):
                         # Check the position of the centroid and control the robot accordingly
                         if cx < cv_image.shape[1] // 2:
                             # Turn left
-                            cmd_vel = Twist(linear=Vector3(x=0.3, y=0, z=0), angular=Vector3(x=0, y=0, z=0.5))
+                            cmd_vel = Twist(linear=Vector3(x=0.2, y=0, z=0), angular=Vector3(x=0, y=0, z=0.5))
                         else:
                             # Turn right
-                            cmd_vel = Twist(linear=Vector3(x=0.3, y=0, z=0), angular=Vector3(x=0, y=0, z=-0.5))
+                            cmd_vel = Twist(linear=Vector3(x=0.2, y=0, z=0), angular=Vector3(x=0, y=0, z=-0.5))
                         
                         pub.publish(cmd_vel)
                 else:
                     allowed_wait += 1
                     print("No redline detected!")
-                    line_detected = False
+        else:
+
+            rospy.loginfo("Turning")
+            if case == 'OBSTACLE CENTER!':
+                for _ in range(10):
+                    pub.publish(turn_left_cmd)
+                    rate.sleep()
+                
+                for _ in range(8):
+                    pub.publish(move_cmd)
+                    rate.sleep()
+
+                for _ in range(10):
+                    pub.publish(turn_right_cmd)
+                    rate.sleep()
+
+                for _ in range(14):
+                    pub.publish(move_cmd)
+                    rate.sleep()
+
+                for _ in range(4):
+                    pub.publish(turn_right_cmd)
+                    rate.sleep()
+
+                for _ in range(5):
+                    pub.publish(move_cmd)
+                    rate.sleep()
+
+                # Reset the obstacle_detected flag
+                obstacle_detected = False        
             
                 
 
@@ -183,5 +202,8 @@ rospy.Subscriber(image_topic, Image, follow_line)
 
 
 # Main loop
+
 while not rospy.is_shutdown():
+    
+        
     rate.sleep()

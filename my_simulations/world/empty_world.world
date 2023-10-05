@@ -18,6 +18,11 @@
             <static>true</static>
             <pose>1.465272 -1.021163 0.47 0 0 0</pose> <!-- Adjust the pose as needed -->
         </include>
+	<include>
+            <uri>model://obstacle</uri>
+            <static>true</static>
+            <pose>1.353057 -0.125243 0.090429 0 0 0</pose> <!-- Adjust the pose as needed -->
+        </include>
 		
 		
 	</world>

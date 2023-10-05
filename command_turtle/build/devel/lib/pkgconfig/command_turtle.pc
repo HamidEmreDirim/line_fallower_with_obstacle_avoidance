@@ -1,0 +1,8 @@
+prefix=/home/emre/catkin_ws/src/command_turtle/build/devel
+
+Name: command_turtle
+Description: Description of command_turtle
+Version: 0.0.0
+Cflags: -I/home/emre/catkin_ws/src/command_turtle/build/devel/include -I/home/emre/catkin_ws/src/command_turtle/include
+Libs: -L${prefix}/lib -lcommand_turtle
+Requires: roscpp rospy std_msgs message_runtime

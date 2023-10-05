@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: command_turtle
+Description: Description of command_turtle
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -lcommand_turtle
+Requires: roscpp rospy std_msgs message_runtime

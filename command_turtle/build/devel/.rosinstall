@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/emre/catkin_ws/src/command_turtle/build/devel/setup.sh

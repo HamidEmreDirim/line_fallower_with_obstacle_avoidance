@@ -2,6 +2,8 @@
 
 import rospy
 from geometry_msgs.msg import Twist, Vector3
+from math import radians
+
 
 def talker():
     pub = rospy.Publisher("/cmd_vel", Twist, queue_size=10)
@@ -13,7 +15,7 @@ def talker():
     rate = rospy.Rate(5)
     
     while not rospy.is_shutdown():
-        pub.publish(Twist(linear=Vector3(x=0, y=0, z=0), angular=Vector3(x=0, y=0, z=-0.5)))
+        pub.publish(Twist(linear=Vector3(x=0, y=0, z=0), angular=Vector3(x=0, y=0, z= -radians(45))))
         rate.sleep()
 
 if __name__ == "__main__":
