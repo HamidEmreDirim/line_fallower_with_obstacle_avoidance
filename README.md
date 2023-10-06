@@ -1,4 +1,9 @@
 Line fallower & Obstacle Avoider robot
+
+![](robot.gif)
+
+
+
 ===============
 
 ### Technologies used
